@@ -1,5 +1,7 @@
 """
-A pure Python implementation of a quick sort algorithm
+A pure Python implementation of a quick sort algorithm.
+Description of the algorithm:
+https://en.wikipedia.org/wiki/Quicksort
 
 For doctests, run:
 python3 -m doctest -v quick_sort.py

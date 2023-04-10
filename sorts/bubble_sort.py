@@ -1,5 +1,8 @@
 def bubble_sort(collection):
-    """Pure implementation of bubble sort algorithm in Python
+    """Pure implementation of bubble sort algorithm in Python.
+    Description of the algorithm:
+    https://en.wikipedia.org/wiki/Bubble_sort
+
     :param collection: some mutable ordered collection with
     heterogeneous comparable items inside
     :return: the same collection ordered by ascending

@@ -5,6 +5,8 @@ When it finds that the order is wrong,
 it moves the compared item backward until the order is correct.
 Then it returns directly to the original item position,
 resuming the comparison forward.
+Description of the algorithm:
+https://en.wikipedia.org/wiki/Insertion_sort
 
 For doctests run:
 python3 -m doctest -v insertion_sort.py

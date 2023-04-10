@@ -1,5 +1,7 @@
 """
-A pure Python implementation of binary search algorithms
+A pure Python implementation of binary search algorithms.
+Description of the algorithm:
+https://en.wikipedia.org/wiki/Binary_search_algorithm
 
 For doctests run:
 python3 -m doctest -v binary_search.py

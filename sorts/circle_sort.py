@@ -1,7 +1,7 @@
 """
 A pure implementation of the circle sort algorithm in Python.
 Description of the algorithm:
-https://en.wikipedia.org/wiki/Cycle_sort
+https://www.geeksforgeeks.org/circle-sort/
 
 For doctests, run:
 python3 -m doctest -v circle_sort.py

@@ -210,3 +210,19 @@ class LZ77Compressor:
         return 1 + self._match_length_from_index(
             text, window + text[text_index], text_index + 1, window_index + 1
         )
+
+
+if __name__ == "__main__":
+    from doctest import testmod
+
+    testmod()
+    # Initialize compressor class
+    lz77_compressor = LZ77Compressor(window_size=13, lookahead_buffer_size=6)
+
+    # Example
+    TEXT = "cabracadabrarrarrad"
+    compressed_text = lz77_compressor.compress(TEXT)
+    print(lz77_compressor.compress("ababcbababaa"))
+    decompressed_text = lz77_compressor.decompress(compressed_text)
+    assert decompressed_text == TEXT, \
+        "The LZ77 algorithm returned the invalid result."

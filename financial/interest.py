@@ -1,10 +1,3 @@
-"""
-Compound interest: Compound interest is calculated by
-multiplying the original principal amount by one plus the
-annual interest rate increased to the number of compound periods minus one.
-Reference: https://www.investopedia.com/
-"""
-
 from __future__ import annotations
 
 
@@ -12,6 +5,12 @@ def simple_interest(
     principal: float, daily_interest_rate: float, days_between_payments: int
 ) -> float:
     """
+    Simple interest paid or received over a certain period is a
+    fixed percentage of the principal amount that has been borrowed or lent.
+
+    Reference: https://www.investopedia.com/
+
+    Examples:
     >>> simple_interest(18000.0, 0.06, 3)
     3240.0
     >>> simple_interest(0.5, 0.06, 3)
@@ -49,7 +48,13 @@ def compound_interest(
     nominal_annual_interest_rate_percentage: float,
     number_of_compounding_periods: int,
 ) -> float:
-    """
+    """Compound interest is calculated by
+    multiplying the original principal amount by one plus the
+    annual interest rate increased to the number of compound periods minus one.
+
+    Reference: https://www.investopedia.com/
+
+    Examples:
     >>> compound_interest(10000.0, 0.05, 3)
     1576.2500000000014
     >>> compound_interest(10000.0, 0.05, 1)

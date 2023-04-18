@@ -134,3 +134,33 @@ class MinHeap:
         node.val = new_value
         self.heap_dict[node.name] = new_value
         self.sift_up(self.idx_of_element[node])
+
+
+r = Node("R", -1)
+b = Node("B", 6)
+a = Node("A", 3)
+x = Node("X", 1)
+e = Node("E", 4)
+
+# Use one of these two ways to generate Min-Heap
+
+# Generating Min-Heap from array
+my_min_heap = MinHeap([r, b, a, x, e])
+
+
+# Before
+print("Min Heap - before decrease key")
+for i in my_min_heap.heap:
+    print(i)
+
+print("Min Heap - After decrease key of node [B -> -17]")
+my_min_heap.decrease_key(b, -17)
+
+# After
+for i in my_min_heap.heap:
+    print(i)
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

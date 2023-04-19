@@ -68,3 +68,169 @@ class Node:
 
     def set_height(self, height: int) -> None:
         self.height = height
+
+
+def get_height(node: Node | None) -> int:
+    if node is None:
+        return 0
+    return node.get_height()
+
+
+def my_max(a: int, b: int) -> int:
+    if a > b:
+        return a
+    return b
+
+
+def right_rotation(node: Node) -> Node:
+    r"""
+            A                      B
+           / \                    / \
+          B   C                  Bl  A
+         / \       -->          /   / \
+        Bl  Br                 UB Br  C
+       /
+     UB
+    UB = unbalanced node
+    """
+    print("left rotation node:", node.get_data())
+    ret = node.get_left()
+    assert ret is not None
+    node.set_left(ret.get_right())
+    ret.set_right(node)
+    h1 = my_max(get_height(node.get_right()), get_height(node.get_left())) + 1
+    node.set_height(h1)
+    h2 = my_max(get_height(ret.get_right()), get_height(ret.get_left())) + 1
+    ret.set_height(h2)
+    return ret
+
+
+def left_rotation(node: Node) -> Node:
+    """
+    A mirror symmetry rotation of the left_rotation
+    """
+    print("right rotation node:", node.get_data())
+    ret = node.get_right()
+    assert ret is not None
+    node.set_right(ret.get_left())
+    ret.set_left(node)
+    h1 = my_max(get_height(node.get_right()), get_height(node.get_left())) + 1
+    node.set_height(h1)
+    h2 = my_max(get_height(ret.get_right()), get_height(ret.get_left())) + 1
+    ret.set_height(h2)
+    return ret
+
+
+def lr_rotation(node: Node) -> Node:
+    r"""
+            A              A                    Br
+           / \            / \                  /  \
+          B   C    LR    Br  C       RR       B    A
+         / \       -->  /  \         -->    /     / \
+        Bl  Br         B   UB              Bl    UB  C
+             \        /
+             UB     Bl
+    RR = right_rotation   LR = left_rotation
+    """
+    left_child = node.get_left()
+    assert left_child is not None
+    node.set_left(left_rotation(left_child))
+    return right_rotation(node)
+
+
+def rl_rotation(node: Node) -> Node:
+    right_child = node.get_right()
+    assert right_child is not None
+    node.set_right(right_rotation(right_child))
+    return left_rotation(node)
+
+
+def insert_node(node: Node | None, data: Any) -> Node | None:
+    if node is None:
+        return Node(data)
+    if data < node.get_data():
+        node.set_left(insert_node(node.get_left(), data))
+        if (
+            get_height(node.get_left()) - get_height(node.get_right()) == 2
+        ):  # an unbalance detected
+            left_child = node.get_left()
+            assert left_child is not None
+            if (
+                data < left_child.get_data()
+            ):  # new node is the left child of the left child
+                node = right_rotation(node)
+            else:
+                node = lr_rotation(node)
+    else:
+        node.set_right(insert_node(node.get_right(), data))
+        if get_height(node.get_right()) - get_height(node.get_left()) == 2:
+            right_child = node.get_right()
+            assert right_child is not None
+            if data < right_child.get_data():
+                node = rl_rotation(node)
+            else:
+                node = left_rotation(node)
+    h1 = my_max(get_height(node.get_right()), get_height(node.get_left())) + 1
+    node.set_height(h1)
+    return node
+
+
+def get_right_most(root: Node) -> Any:
+    while True:
+        right_child = root.get_right()
+        if right_child is None:
+            break
+        root = right_child
+    return root.get_data()
+
+
+def get_left_most(root: Node) -> Any:
+    while True:
+        left_child = root.get_left()
+        if left_child is None:
+            break
+        root = left_child
+    return root.get_data()
+
+
+def del_node(root: Node, data: Any) -> Node | None:
+    left_child = root.get_left()
+    right_child = root.get_right()
+    if root.get_data() == data:
+        if left_child is not None and right_child is not None:
+            temp_data = get_left_most(right_child)
+            root.set_data(temp_data)
+            root.set_right(del_node(right_child, temp_data))
+        elif left_child is not None:
+            root = left_child
+        elif right_child is not None:
+            root = right_child
+        else:
+            return None
+    elif root.get_data() > data:
+        if left_child is None:
+            print("No such data")
+            return root
+        else:
+            root.set_left(del_node(left_child, data))
+    else:  # root.get_data() < data
+        if right_child is None:
+            return root
+        else:
+            root.set_right(del_node(right_child, data))
+
+    if get_height(right_child) - get_height(left_child) == 2:
+        assert right_child is not None
+        if get_height(right_child.get_right()) > get_height(right_child.get_left()):
+            root = left_rotation(root)
+        else:
+            root = rl_rotation(root)
+    elif get_height(right_child) - get_height(left_child) == -2:
+        assert left_child is not None
+        if get_height(left_child.get_left()) > get_height(left_child.get_right()):
+            root = right_rotation(root)
+        else:
+            root = lr_rotation(root)
+    height = my_max(get_height(root.get_right()), get_height(root.get_left())) + 1
+    root.set_height(height)
+    return root

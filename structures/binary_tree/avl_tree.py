@@ -8,6 +8,8 @@ python avl_tree.py
 """
 from __future__ import annotations
 
+import math
+import random
 from typing import Any
 
 
@@ -237,3 +239,106 @@ def del_node(root: Node, data: Any) -> Node | None:
                     get_height(root.get_left())) + 1
     root.set_height(height)
     return root
+
+
+class AVLtree:
+    """An AVL tree.
+    Examples:
+    >>> t = AVLtree()
+    >>> t.insert(4)
+    insert:4
+    >>> print(str(t).replace(" \\n","\\n"))
+     4
+    *************************************
+    >>> t.insert(2)
+    insert:2
+    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
+      4
+     2  *
+    *************************************
+    >>> t.insert(3)
+    insert:3
+    right rotation node: 2
+    left rotation node: 4
+    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
+      3
+     2  4
+    *************************************
+    >>> t.get_height()
+    2
+    >>> t.del_node(3)
+    delete:3
+    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
+      4
+     2  *
+    *************************************
+    """
+
+    def __init__(self) -> None:
+        self.root: Node | None = None
+
+    def get_height(self) -> int:
+        return get_height(self.root)
+
+    def insert(self, data: Any) -> None:
+        print("insert:" + str(data))
+        self.root = insert_node(self.root, data)
+
+    def del_node(self, data: Any) -> None:
+        print("delete:" + str(data))
+        if self.root is None:
+            print("Tree is empty!")
+            return
+        self.root = del_node(self.root, data)
+
+    def __str__(
+        self,
+    ) -> str:  # a level traversale, gives a more intuitive look on the tree
+        output = ""
+        q = Queue()
+        q.push(self.root)
+        layer = self.get_height()
+        if layer == 0:
+            return output
+        cnt = 0
+        while not q.is_empty():
+            node = q.pop()
+            space = " " * int(math.pow(2, layer - 1))
+            output += space
+            if node is None:
+                output += "*"
+                q.push(None)
+                q.push(None)
+            else:
+                output += str(node.get_data())
+                q.push(node.get_left())
+                q.push(node.get_right())
+            output += space
+            cnt = cnt + 1
+            for i in range(100):
+                if cnt == math.pow(2, i) - 1:
+                    layer = layer - 1
+                    if layer == 0:
+                        output += "\n*************************************"
+                        return output
+                    output += "\n"
+                    break
+        output += "\n*************************************"
+        return output
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+
+    t = AVLtree()
+    lst = list(range(10))
+    random.shuffle(lst)
+    for i in lst:
+        t.insert(i)
+        print(str(t))
+    random.shuffle(lst)
+    for i in lst:
+        t.del_node(i)
+        print(str(t))

@@ -168,3 +168,87 @@ class LinkedList:
 
     def is_empty(self):
         return self.head is None
+
+
+def create_linked_list() -> None:
+    """
+    >>> new_linked_list = LinkedList()
+    >>> new_linked_list.get_head_data() is None
+    True
+    >>> new_linked_list.get_tail_data() is None
+    True
+    >>> new_linked_list.is_empty()
+    True
+    >>> new_linked_list.insert(10)
+    >>> new_linked_list.get_head_data()
+    10
+    >>> new_linked_list.get_tail_data()
+    10
+    >>> new_linked_list.insert_at_position(position=3, value=20)
+    >>> new_linked_list.get_head_data()
+    10
+    >>> new_linked_list.get_tail_data()
+    20
+    >>> new_linked_list.set_head(Node(1000))
+    >>> new_linked_list.get_head_data()
+    1000
+    >>> new_linked_list.get_tail_data()
+    20
+    >>> new_linked_list.set_tail(Node(2000))
+    >>> new_linked_list.get_head_data()
+    1000
+    >>> new_linked_list.get_tail_data()
+    2000
+    >>> for value in new_linked_list:
+    ...    print(value)
+    1000
+    10
+    20
+    2000
+    >>> new_linked_list.is_empty()
+    False
+    >>> for value in new_linked_list:
+    ...    print(value)
+    1000
+    10
+    20
+    2000
+    >>> 10 in new_linked_list
+    True
+    >>> new_linked_list.delete_value(value=10)
+    >>> 10 in new_linked_list
+    False
+    >>> new_linked_list.delete_value(value=2000)
+    >>> new_linked_list.get_tail_data()
+    20
+    >>> new_linked_list.delete_value(value=1000)
+    >>> new_linked_list.get_tail_data()
+    20
+    >>> new_linked_list.get_head_data()
+    20
+    >>> for value in new_linked_list:
+    ...    print(value)
+    20
+    >>> new_linked_list.delete_value(value=20)
+    >>> for value in new_linked_list:
+    ...    print(value)
+    >>> for value in range(1,10):
+    ...    new_linked_list.insert(value=value)
+    >>> for value in new_linked_list:
+    ...    print(value)
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    """
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

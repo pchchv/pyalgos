@@ -6,6 +6,9 @@ from __future__ import annotations
 from collections.abc import Iterable, Iterator
 from dataclasses import dataclass
 
+test_data_odd = (3, 9, -11, 0, 7, 5, 1, -1)
+test_data_even = (4, 6, 2, 0, 8, 10, 3, -2)
+
 
 @dataclass
 class Node:
@@ -53,3 +56,27 @@ class SortedLinkedList:
         '-2 -> 0 -> 2 -> 3 -> 4 -> 6 -> 8 -> 10'
         """
         return " -> ".join([str(node) for node in self])
+
+
+def merge_lists(
+    sll_one: SortedLinkedList, sll_two: SortedLinkedList
+) -> SortedLinkedList:
+    """
+    >>> SSL = SortedLinkedList
+    >>> merged = merge_lists(SSL(test_data_odd), SSL(test_data_even))
+    >>> len(merged)
+    16
+    >>> str(merged)
+    '-11 -> -2 -> -1 -> 0 -> 0 -> 1 -> 2 -> 3 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10'
+    >>> list(merged) == list(sorted(test_data_odd + test_data_even))
+    True
+    """  # noqa: E501
+    return SortedLinkedList(list(sll_one) + list(sll_two))
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
+    SSL = SortedLinkedList
+    print(merge_lists(SSL(test_data_odd), SSL(test_data_even)))

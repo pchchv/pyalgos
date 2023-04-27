@@ -20,7 +20,7 @@ class FixedPriorityQueue:
     In the code, we will use three levels of priority,
     with tasks with zero priority being the most urgent (high priority) and
     tasks with priority 2 being the least urgent.
-    Examples
+    Examples:
     >>> fpq = FixedPriorityQueue()
     >>> fpq.enqueue(0, 10)
     >>> fpq.enqueue(1, 70)
@@ -100,3 +100,80 @@ class FixedPriorityQueue:
     def __str__(self) -> str:
         return "\n".join(f"Priority {i}: {q}" for i,
                          q in enumerate(self.queues))
+
+
+class ElementPriorityQueue:
+    """
+    An item priority queue is the same as a fixed priority queue,
+    except that the value of the item itself is the priority.
+    The rules for priorities are the same as for Fixed Priority Queue.
+    Examples:
+    >>> epq = ElementPriorityQueue()
+    >>> epq.enqueue(10)
+    >>> epq.enqueue(70)
+    >>> epq.enqueue(4)
+    >>> epq.enqueue(1)
+    >>> epq.enqueue(5)
+    >>> epq.enqueue(7)
+    >>> epq.enqueue(4)
+    >>> epq.enqueue(64)
+    >>> epq.enqueue(128)
+    >>> print(epq)
+    [10, 70, 4, 1, 5, 7, 4, 64, 128]
+    >>> epq.dequeue()
+    1
+    >>> epq.dequeue()
+    4
+    >>> epq.dequeue()
+    4
+    >>> epq.dequeue()
+    5
+    >>> epq.dequeue()
+    7
+    >>> epq.dequeue()
+    10
+    >>> print(epq)
+    [70, 64, 128]
+    >>> epq.dequeue()
+    64
+    >>> epq.dequeue()
+    70
+    >>> epq.dequeue()
+    128
+    >>> epq.dequeue()
+    Traceback (most recent call last):
+        ...
+    data_structures.queue.priority_queue_using_list.UnderFlowError: The queue is empty
+    >>> print(epq)
+    []
+    """  # noqa: E501
+
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, data: int) -> None:
+        """
+        This function enters the element into the queue
+        If the queue is full an Exception is raised saying Over Flow!
+        """
+        if len(self.queue) == 100:
+            raise OverFlowError("Maximum queue size is 100")
+        self.queue.append(data)
+
+    def dequeue(self) -> int:
+        """
+        Return the highest priority element in FIFO order.
+        If the queue is empty then an under flow exception is raised.
+        """
+        if not self.queue:
+            raise UnderFlowError("The queue is empty")
+        else:
+            data = min(self.queue)
+            self.queue.remove(data)
+            return data
+
+    def __str__(self) -> str:
+        """
+        Prints all the elements within the Element Priority Queue
+        """
+        return str(self.queue)

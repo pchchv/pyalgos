@@ -1,5 +1,5 @@
 """
-Implementation of a single-linked list.
+Implementation of a single linked list.
 
 Reference:
 https://www.geeksforgeeks.org/data-structures/linked-list/singly-linked-list/

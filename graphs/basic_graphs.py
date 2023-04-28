@@ -41,3 +41,27 @@ def initialize_weighted_undirected_graph(
         graph[x].append((y, w))
         graph[y].append((x, w))
     return graph
+
+
+def dfs(g, s):
+    """
+    Depth First Search.
+    Args:   G - Dictionary of edges
+            s - Starting Node
+    Vars :  vis - Set of visited nodes
+            S - Traversal Stack
+    """
+
+    vis, _s = {s}, [s]
+    print(s)
+    while _s:
+        flag = 0
+        for i in g[_s[-1]]:
+            if i not in vis:
+                _s.append(i)
+                vis.add(i)
+                flag = 1
+                print(i)
+                break
+        if not flag:
+            _s.pop()

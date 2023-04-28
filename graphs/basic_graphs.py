@@ -248,3 +248,14 @@ def krusk(e_and_n):
                 s[j].update(s[i])
                 s.pop(i)
                 break
+
+
+def find_isolated_nodes(graph):
+    """
+    Finds the isolated node in the graph.
+    """
+    isolated = []
+    for node in graph:
+        if not graph[node]:
+            isolated.append(node)
+    return isolated

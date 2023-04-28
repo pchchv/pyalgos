@@ -177,3 +177,30 @@ def floy(a_and_n):
                     dist[i][j] = dist[i][k] + dist[k][j]
                     path[i][k] = k
     print(dist)
+
+
+def prim(g, s):
+    """
+    Prim's MST Algorithm.
+        Args:   G - Dictionary of edges
+                s - Starting Node
+        Vars:   dist - Dictionary storing shortest distance
+                    from s to nearest node
+                known - Set of knows nodes
+                path - Preceding node in path
+    """
+    dist, known, path = {s: 0}, set(), {s: 0}
+    while True:
+        if len(known) == len(g) - 1:
+            break
+        mini = 100000
+        for i in dist:
+            if i not in known and dist[i] < mini:
+                mini = dist[i]
+                u = i
+        known.add(u)
+        for v in g[u]:
+            if v[0] not in known and v[1] < dist.get(v[0], 100000):
+                dist[v[0]] = v[1]
+                path[v[0]] = u
+    return dist

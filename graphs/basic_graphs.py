@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def _input(message):
     return input(message).strip().split(" ")
 
@@ -48,7 +51,7 @@ def dfs(g, s):
     Depth First Search.
     Args:   G - Dictionary of edges
             s - Starting Node
-    Vars :  vis - Set of visited nodes
+    Vars:   vis - Set of visited nodes
             S - Traversal Stack
     """
 
@@ -65,3 +68,51 @@ def dfs(g, s):
                 break
         if not flag:
             _s.pop()
+
+
+def bfs(g, s):
+    """
+    Breadth First Search.
+    Args :  G - Dictionary of edges
+            s - Starting Node
+    Vars :  vis - Set of visited nodes
+            Q - Traversal Stack
+    """
+    vis, q = {s}, deque([s])
+    print(s)
+    while q:
+        u = q.popleft()
+        for v in g[u]:
+            if v not in vis:
+                vis.add(v)
+                q.append(v)
+                print(v)
+
+
+def dijk(g, s):
+    """
+    Dijkstra's shortest path Algorithm
+        Args:   G - Dictionary of edges
+                s - Starting Node
+        Vars:   dist - Dictionary storing shortest distance
+                    from s to every other node
+                known - Set of knows nodes
+                path - Preceding node in path
+    """
+    dist, known, path = {s: 0}, set(), {s: 0}
+    while True:
+        if len(known) == len(g) - 1:
+            break
+        mini = 100000
+        for i in dist:
+            if i not in known and dist[i] < mini:
+                mini = dist[i]
+                u = i
+        known.add(u)
+        for v in g[u]:
+            if v[0] not in known and dist[u] + v[1] < dist.get(v[0], 100000):
+                dist[v[0]] = dist[u] + v[1]
+                path[v[0]] = u
+    for i in dist:
+        if i != s:
+            print(dist[i])

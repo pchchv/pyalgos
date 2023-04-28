@@ -204,3 +204,47 @@ def prim(g, s):
                 dist[v[0]] = v[1]
                 path[v[0]] = u
     return dist
+
+
+def edglist():
+    """
+    Accepting Edge list.
+        Vars:   n - Number of nodes
+                m - Number of edges
+        Returns:   l - Edge list
+                   n - Number of Nodes
+    """
+    n, m = map(int, input().split(" "))
+    edges = []
+    for _ in range(m):
+        edges.append(map(int, input().split(" ")))
+    return edges, n
+
+
+def krusk(e_and_n):
+    """
+    Kruskal's MST Algorithm.
+        Args:   E - Edge list
+                n - Number of Nodes
+        Vars:   s - Set of all nodes as unique disjoint sets (initially)
+
+    Sort edges on the basis of distance.
+    """
+    (e, n) = e_and_n
+    e.sort(reverse=True, key=lambda x: x[2])
+    s = [{i} for i in range(1, n + 1)]
+    while True:
+        if len(s) == 1:
+            break
+        print(s)
+        x = e.pop()
+        for i in range(len(s)):
+            if x[0] in s[i]:
+                break
+        for j in range(len(s)):
+            if x[1] in s[j]:
+                if i == j:
+                    break
+                s[j].update(s[i])
+                s.pop(i)
+                break

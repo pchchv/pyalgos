@@ -118,3 +118,40 @@ def dijk(g, s):
     for i in dist:
         if i != s:
             print(dist[i])
+
+
+def topo(g, ind=None, q=None):
+    """
+    Topological Sort.
+    """
+    if q is None:
+        q = [1]
+    if ind is None:
+        ind = [0] * (len(g) + 1)  # SInce oth Index is ignored
+        for u in g:
+            for v in g[u]:
+                ind[v] += 1
+        q = deque()
+        for i in g:
+            if ind[i] == 0:
+                q.append(i)
+    if len(q) == 0:
+        return
+    v = q.popleft()
+    print(v)
+    for w in g[v]:
+        ind[w] -= 1
+        if ind[w] == 0:
+            q.append(w)
+    topo(g, ind, q)
+
+
+def adjm():
+    """
+    Reading an Adjacency matrix.
+    """
+    n = input().strip()
+    a = []
+    for _ in range(n):
+        a.append(map(int, input().strip().split()))
+    return a, n
